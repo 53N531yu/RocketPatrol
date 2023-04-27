@@ -56,6 +56,7 @@ class Play extends Phaser.Scene
     this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
     this.gameOver = true;
   }, null, this);
+
   }
 
   update() {
@@ -117,7 +118,9 @@ class Play extends Phaser.Scene
     this.p1Score += ship.points;
     this.scoreLeft.text = this.p1Score;
     this.clock.elapsed -= ship.time;
-    this.sound.play('sfx_explosion');
+    const explosionSounds = ['sfx_explosion1', 'sfx_explosion2', 'sfx_explosion3', 'sfx_explosion4'];
+    const soundKey = Phaser.Utils.Array.GetRandom(explosionSounds);
+    this.sound.play(soundKey);
   }
 }
 

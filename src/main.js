@@ -3,6 +3,7 @@
 // Implemented a new timing mechanism that adds time to the clock for successful hits (15). I simply used the "this.clock.elapsed" feature.
 // Implemented mouse control for player movement and mouse click to fire (15). I commented out the arrow key movement system and added an event listener for mouse inputs.
 // Added a new enemy Sapceship type with new artwork that's smaller, moves faster, and is worth more points (15). I just made a new class for the new ship, which works exactly like the original ship, but with different numbers.
+// Created 4 new explosion sound effects and randomized which one plays on impact (10). I made an array containing the new sound effects and used the Phaser.Utils.Array.GetRandom() funtion to get a random sound effect from the array.
 
 let config = {
   type: Phaser.AUTO,

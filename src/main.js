@@ -7,6 +7,7 @@
 // Allowed the player to control the Rocket after it's fired (5). literally one line of code lol.
 // Added new scrolling tile sprite for the background (5).
 // Added my own background music to the Play scene (5).
+// Displayed the time remaining (in seconds) on the screen (10).
 
 let config = {
   type: Phaser.AUTO,

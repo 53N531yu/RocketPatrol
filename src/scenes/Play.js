@@ -43,6 +43,7 @@ class Play extends Phaser.Scene
       frameRate: 30
   });
   this.p1Score = 0;
+  this.p1Time = game.settings.gameTimer;
   let scoreConfig = {
     fontFamily: 'Courier',
     fontSize: '28px',
@@ -55,6 +56,7 @@ class Play extends Phaser.Scene
     },
     fixedWidth: 100
   }
+  
   this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
   this.gameOver = false;
   scoreConfig.fixedWidth = 0;
@@ -70,7 +72,22 @@ class Play extends Phaser.Scene
     if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
       this.backMusic.stop();
       this.scene.restart();
-  }
+    }
+    let timeConfig = {
+      fontFamily: 'Courier',
+      fontSize: '28px',
+      backgroundColor: '#F3B141',
+      color: '#843605',
+      align: 'right',
+      padding: {
+        top: 5,
+        bottom: 5,
+      },
+      fixedWidth: 100
+    }
+    
+    this.timeRight = this.add.text(borderUISize + borderPadding*10, borderUISize + borderPadding*2, Math.floor(this.p1Time/1000), timeConfig);
+    this.p1Time -= Math.floor(this.clock.elapsed/1000);
     this.starfield.tilePositionX -= 1;
     this.parallax1.tilePositionX -= 2;
     this.parallax2.tilePositionX -= 3;
@@ -128,6 +145,8 @@ class Play extends Phaser.Scene
     this.p1Score += ship.points;
     this.scoreLeft.text = this.p1Score;
     this.clock.elapsed -= ship.time;
+    this.p1Time += ship.time;
+    this.timeRight.text = this.p1Time;
     const explosionSounds = ['sfx_explosion1', 'sfx_explosion2', 'sfx_explosion3', 'sfx_explosion4'];
     const soundKey = Phaser.Utils.Array.GetRandom(explosionSounds);
     this.sound.play(soundKey);

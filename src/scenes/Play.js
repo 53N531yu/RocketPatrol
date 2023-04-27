@@ -12,6 +12,7 @@ class Play extends Phaser.Scene
     this.load.image('starfield', './assets/Background.png');
     this.load.image('Parallax1', './assets/Parallax1.png');
     this.load.image('Parallax2', './assets/Parallax2.png');
+    this.load.image('particle', './assets/particle.png');
     this.load.audio('backMusic', './assets/BackgroundMusic.wav');
     this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
   }
@@ -31,6 +32,7 @@ class Play extends Phaser.Scene
     this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, 'spaceship', 0, 20, 1000).setOrigin(0,0);
     this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, 'spaceship', 0, 10, 500).setOrigin(0,0);
     this.ship04 = new fastSpaceship(this, game.config.width + borderUISize*9, borderUISize*7 + borderPadding*6, 'fastSpaceship', 0, 50, 2500).setOrigin(0, 0);
+    this.particles = this.add.particles('particle');
     keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
     keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
     keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -85,7 +87,6 @@ class Play extends Phaser.Scene
       },
       fixedWidth: 100
     }
-    
     this.timeRight = this.add.text(borderUISize + borderPadding*10, borderUISize + borderPadding*2, Math.floor(this.p1Time/1000), timeConfig);
     this.p1Time -= Math.floor(this.clock.elapsed/1000);
     this.starfield.tilePositionX -= 1;
@@ -141,7 +142,17 @@ class Play extends Phaser.Scene
       ship.reset();                         // reset ship position
       ship.alpha = 1;                       // make ship visible again
       boom.destroy();                       // remove explosion sprite
-    }); 
+    });
+    this.emitter = this.particles.createEmitter({
+      x: ship.x,
+      y: ship.y,
+      speed: { min: -100, max: 100 },
+      angle: { min: 0, max: 360 },
+      scale: { start: 3, end: 0 },
+      lifespan: 300,
+      gravityY: 800
+    });
+    this.emitter.start();
     this.p1Score += ship.points;
     this.scoreLeft.text = this.p1Score;
     this.clock.elapsed -= ship.time;
@@ -149,7 +160,10 @@ class Play extends Phaser.Scene
     this.timeRight.text = this.p1Time;
     const explosionSounds = ['sfx_explosion1', 'sfx_explosion2', 'sfx_explosion3', 'sfx_explosion4'];
     const soundKey = Phaser.Utils.Array.GetRandom(explosionSounds);
-    this.sound.play(soundKey);
+    this.sound.play(soundKey); 
+    setTimeout(() => {
+      this.emitter.stop();
+    }, 500);  
   }
 }
 

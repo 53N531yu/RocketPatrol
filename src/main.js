@@ -8,6 +8,7 @@
 // Added new scrolling tile sprite for the background (5).
 // Added my own background music to the Play scene (5).
 // Displayed the time remaining (in seconds) on the screen (10). There's a little problem with phaser where the seconds aren't counting consistently.
+// Implemented parallax scrolling for the background (10).
 
 let config = {
   type: Phaser.AUTO,

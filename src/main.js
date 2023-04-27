@@ -1,3 +1,6 @@
+// Oscar Tiong
+// Rocket patrol
+// Implemented a new timing mechanism that adds time to the clock for successful hits (15).
 let config = {
   type: Phaser.AUTO,
   width: 640,

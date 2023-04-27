@@ -9,6 +9,7 @@
 // Added my own background music to the Play scene (5).
 // Displayed the time remaining (in seconds) on the screen (10). There's a little problem with phaser where the seconds aren't counting consistently.
 // Implemented parallax scrolling for the background (10).
+// Used Phaser's Particle emitter to create a particle explosion when the rocket hits the spaceship (15).
 
 let config = {
   type: Phaser.AUTO,

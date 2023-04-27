@@ -5,6 +5,8 @@
 // Added a new enemy Sapceship type with new artwork that's smaller, moves faster, and is worth more points (15). I just made a new class for the new ship, which works exactly like the original ship, but with different numbers.
 // Created 4 new explosion sound effects and randomized which one plays on impact (10). I made an array containing the new sound effects and used the Phaser.Utils.Array.GetRandom() funtion to get a random sound effect from the array.
 // Allowed the player to control the Rocket after it's fired (5). literally one line of code lol.
+// Added new scrolling tile sprite for the background (5).
+// Added my own background music to the Play scene (5).
 
 let config = {
   type: Phaser.AUTO,

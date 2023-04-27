@@ -8,7 +8,8 @@ class Menu extends Phaser.Scene
   preload() {
     // load audio
     this.load.audio('sfx_select', './assets/blip_select12.wav');
-    this.load.audio('sfx_explosion', './assets/explosion38.wav');
+    this.load.audio('sfx_select', './assets/blip_select12.wav');
+    this.load.audio('backMusic', './assets/BackgroundMusic.wav');
     this.load.audio('sfx_explosion1', './assets/Explosion1.wav');
     this.load.audio('sfx_explosion2', './assets/Explosion2.wav');
     this.load.audio('sfx_explosion3', './assets/Explosion3.wav');
@@ -37,6 +38,7 @@ class Menu extends Phaser.Scene
     this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press + for Novice or - for Expert', menuConfig) .setOrigin(0.5);
     keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
     keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+    //this.sound.stop('backMusic');
   }
 
   update() {
@@ -48,6 +50,7 @@ class Menu extends Phaser.Scene
         gameTimer: 60000    
       }
       this.sound.play('sfx_select');
+      //this.sound.play('backMusic');
       this.scene.start('playScene');    
     }
     if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
@@ -58,6 +61,7 @@ class Menu extends Phaser.Scene
         gameTimer: 45000    
       }
       this.sound.play('sfx_select');
+      //this.sound.play('backMusic');
       this.scene.start('playScene');    
     }
   }

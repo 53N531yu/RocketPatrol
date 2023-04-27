@@ -9,13 +9,18 @@ class Play extends Phaser.Scene
     this.load.image('rocket', './assets/rocket.png');
     this.load.image('spaceship', './assets/spaceship.png');
     this.load.image('fastSpaceship', './assets/FastShip.png');
-    this.load.image('starfield', './assets/starfield.png');
+    this.load.image('starfield', './assets/Background.png');
+    this.load.image('Parallax1', './assets/Parallax1.png');
+    this.load.image('Parallax2', './assets/Parallax2.png');
+    this.load.audio('backMusic', './assets/BackgroundMusic.wav');
     this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
   }
 
   create()
   {
     this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
+    this.parallax1 = this.add.tileSprite(0, 0, 640, 480, 'Parallax1').setOrigin(0, 0);
+    this.parallax2 = this.add.tileSprite(0, 0, 640, 480, 'Parallax2').setOrigin(0, 0);
     this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x00FF00).setOrigin(0, 0);
     this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
     this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
@@ -30,6 +35,8 @@ class Play extends Phaser.Scene
     keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
     keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
     keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+    this.backMusic = this.sound.add('backMusic', {loop: true});
+    this.backMusic.play();
     this.anims.create({
       key: 'explode',
       frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 9, first: 0}),
@@ -61,17 +68,19 @@ class Play extends Phaser.Scene
 
   update() {
     if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
+      this.backMusic.stop();
       this.scene.restart();
   }
-    this.starfield.tilePositionX -= 4;
-    if (!this.gameOver) {               
+    this.starfield.tilePositionX -= 1;
+    this.parallax1.tilePositionX -= 2;
+    this.parallax2.tilePositionX -= 3;
+    if (!this.gameOver) {   
       this.p1Rocket.update();         // update rocket sprite
       this.ship01.update();           // update spaceships (x3)
       this.ship02.update();
       this.ship03.update();
       this.ship04.update();
-      console.log(this.clock.elapsed);
-  } 
+    } 
     if(this.checkCollision(this.p1Rocket, this.ship03)) {
       this.p1Rocket.reset();
       this.shipExplode(this.ship03);   
@@ -90,6 +99,7 @@ class Play extends Phaser.Scene
     }
     if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
       this.scene.start("menuScene");
+      this.backMusic.stop();
     }
   }
 
